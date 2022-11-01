@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-navigation-drawer app :temporary="!!isMobile" :permanent="!isMobile || (!!isMobile && !!show_nav)" left v-model="drawer" :mini-variant.sync="mini" v-if="show_nav">
+        <v-navigation-drawer color="#FCFCFC" app :temporary="!!isMobile" :permanent="!isMobile || (!!isMobile && !!show_nav)" left v-model="drawer" :mini-variant.sync="mini" v-if="show_nav">
             <template v-slot:prepend>
                 <v-list-item two-line class="pl-2">
                     <v-list-item-avatar class="my-0">
@@ -8,18 +8,18 @@
                         <img :src="profilePic">
                     </v-list-item-avatar>
                     <v-list-item-content>
-                        <v-list-item-title>Jane Smith</v-list-item-title>
+                        <v-list-item-title> {{ authUser.name }} </v-list-item-title>
                         <v-list-item-subtitle>Logged In</v-list-item-subtitle>
                     </v-list-item-content>
-                    <v-btn icon  @click.stop="toggleSideNav()">
+                    <v-btn icon  @click.stop="toggleSideNav()" title="Minimize Sidebar">
                         <v-icon>mdi-chevron-left</v-icon>
                     </v-btn>
                 </v-list-item>
             </template>
             <v-divider/>
-            <v-list dense>
+            <v-list nav dense>
                 <v-list-item-group v-model="selectedItem" color="primary">
-                    <v-list-item v-for="item in items" :key="item.title">
+                    <!-- <v-list-item v-for="(item, i) in items" :key="i" :to="{ name: item.name }">
                         <v-list-item-icon>
                             <v-icon>{{ item.icon }}</v-icon>
                         </v-list-item-icon>
@@ -27,20 +27,60 @@
                         <v-list-item-content>
                             <v-list-item-title>{{ item.title }}</v-list-item-title>
                         </v-list-item-content>
+                    </v-list-item> -->
+
+
+                    <v-list-item :to="{ name: 'Dashboard' }" title="Dashboard">
+                        <v-list-item-icon>
+                            <v-icon>mdi-chart-bar</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title>Dashboard</v-list-item-title>
+                        </v-list-item-content>
                     </v-list-item>
+
+                    <v-list-group
+                        :value="['Roles', 'User Management'].includes($route.name)"
+                        no-action
+                        :title="`User Control${['Roles', 'User Management'].includes($route.name) ? ` (${$route.name})` : ''}`"
+                    >
+                        <template v-slot:activator>
+                            <v-list-item-icon>
+                                <v-icon>mdi-account-cog-outline</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>User Control</v-list-item-title>
+                            </v-list-item-content>
+                        </template>
+                        <v-list-item :to="{ name: 'Roles' }" title="Roles">
+                            <v-list-item-title>Roles</v-list-item-title>
+                            <v-list-item-icon>
+                                <v-icon>mdi-account-key</v-icon>
+                            </v-list-item-icon>
+                        </v-list-item>
+                        <v-list-item :to="{ name: 'User Management' }" title="User Management">
+                            <v-list-item-title>User Management</v-list-item-title>
+                            <v-list-item-icon>
+                                <v-icon>mdi-account-multiple-outline</v-icon>
+                            </v-list-item-icon>
+                        </v-list-item>
+                    </v-list-group>
+
+                    <v-list-item title="My Account">
+                        <v-list-item-icon>
+                            <v-icon>mdi-account-circle-outline</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title>My Profile</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
                 </v-list-item-group>
             </v-list>
             <template v-slot:append>
                 <v-dialog v-model="logout_confirm_dialog" max-width="450px">
                     <template v-slot:activator="{ on, attrs }">
-                        <!-- <v-btn block  outlined v-bind="attrs" v-on="on">
-                            <v-icon left>
-                                mdi-logout-variant
-                            </v-icon>
-                            Logout
-                        </v-btn> -->
-
-                        <div class="pa-2">
+                        <!-- <div class="pa-2">
                             <v-btn block class="error" v-if="!mini" v-bind="attrs" v-on="on">
                                 <v-icon left>mdi-logout</v-icon>
                                 Logout
@@ -48,12 +88,25 @@
                             <v-btn block class="error" v-else icon dark elevation="1" v-bind="attrs" v-on="on">
                                 <v-icon small>mdi-logout</v-icon>
                             </v-btn>
-                        </div>
+                        </div> -->
+                        <v-list nav dense title="Logout">
+                            <!-- <v-list-item-group v-model="selectedItem" color="error"> -->
+                                <v-list-item v-bind="attrs" v-on="on">
+                                    <v-list-item-icon>
+                                        <v-icon color="error">mdi-logout</v-icon>
+                                    </v-list-item-icon>
+
+                                    <v-list-item-content>
+                                        <v-list-item-title>Logout</v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            <!-- </v-list-item-group> -->
+                        </v-list>
                     </template>
                     <template v-slot:default="dialog">
                         <v-card>
                             <v-card-title class="headline">
-                                <v-icon class="mr-2" size="30px">mdi-logout</v-icon>
+                                <v-icon color="error" class="mr-2" size="20px">mdi-logout</v-icon>
                                 Logout
                             </v-card-title>
                             <v-card-text>
@@ -83,12 +136,36 @@
             </template>
         </v-navigation-drawer>
 
-        <v-app-bar color="primary" dark app :style="(isMobile ? '' : 'height:64px;')">
-            <v-app-bar-nav-icon @click.stop="navVisibility"/>
+        <v-app-bar color="primary" elevation="1" app dark :style="(isMobile ? '' : 'height:64px;')">
+            <v-app-bar-nav-icon @click.stop="navVisibility" title="Toggle Sidebar"/>
+            <v-app-bar-nav-icon @click="fullscreenMode()" title="Toggle Full screen mode (F11)">
+                <v-icon v-if="fullscreen_mode">mdi-fullscreen-exit</v-icon>
+                <v-icon v-else>mdi-fullscreen</v-icon>
+            </v-app-bar-nav-icon>
             <v-toolbar-title> {{ $route.name }} </v-toolbar-title>
+
+            <v-progress-linear
+                v-if="!!app_loader"
+                :active="app_loader"
+                indeterminate
+                absolute
+                bottom
+                color="#F72e2E"
+            ></v-progress-linear>
+
+            <v-spacer></v-spacer>
+
+            <v-icon @click.stop="">mdi-bell</v-icon>
+
         </v-app-bar>
 
         <v-main>
+            <v-snackbar v-model="snackbar_visible" :color="snackbar.type">
+                {{ snackbar.message }}
+                <template v-slot:action="{ attrs }">
+                    <v-btn text v-bind="attrs" @click="$store.commit('UNSET_SNACKBAR')"> Close </v-btn>
+                </template>
+            </v-snackbar>
             <v-container fluid>
                 <router-view />
             </v-container>
@@ -101,6 +178,10 @@
 </template>
 
 <script>
+
+    import { mapGetters } from 'vuex'
+    import axios from '../config/axios'
+
     export default {
         data () {
             return {
@@ -108,23 +189,41 @@
                 drawer: null,
                 mini: false,
                 show_nav: true,
-                items: [
-                    { title: 'Home', icon: 'mdi-home-city' },
-                    { title: 'My Account', icon: 'mdi-account' },
-                    { title: 'Users', icon: 'mdi-account-group-outline' },
-                ],
+                // items: [
+                //     { title: 'Dashboard', name: 'Dashboard', icon: 'mdi-chart-bar' },
+                //     { title: 'Purchase Requests', name: 'Purchase Requests', icon: 'mdi-file-document-multiple-outline' },
+                //     { title: 'Obligation Requests', name: 'Obligation Requests', icon: 'mdi-checkbox-multiple-marked-outline' },
+                //     { title: 'Reports', name: 'Reports', icon: 'mdi-folder-open-outline' },
+                //     { title: 'Settings', name: 'Settings', icon: 'mdi-cog-outline', sub_menu: [{ title: 'Settings', name: 'Settings', icon: 'mdi-cog-outline' }]},
+                // ],
                 selectedItem: 0,
                 logout_confirm_dialog: false,
+                fullscreen_mode: false,
+                snackbar_visible: false,
+            }
+        },
+        watch: {
+            'snackbar.show'(val) {
+                if (!val) {
+                    this.$store.commit('UNSET_SNACKBAR')
+                    this.snackbar_visible = false
+                } else {
+                    this.snackbar_visible = true
+                }
             }
         },
         computed: {
+            ...mapGetters(['auth', 'app_loader', 'snackbar']),
             profilePic() {
-                return location.origin + '/image/profile.jpg'
+                return location.origin + '/images/provincial_logo.png'
             },
             isMobile() {
                 return this.$vuetify.breakpoint.smAndDown
                 // return $vuetify.breakpoint.mobile
-            }
+            },
+            authUser() {
+                return this.auth || {}
+            },
         },
         methods: {
             navVisibility() {
@@ -139,12 +238,14 @@
                 }
             },
             logout() {
-                axios.post('/api/logout', { headers: { Authorization: 'Bearer' + this.$store?.state?.users?.auth?.token, 'Content-Type': 'application/json' } }).then(response => {
+                axios.post('logout').then(response => {
                     this.$store.commit("UNSET_AUTH")
                     localStorage.removeItem("meta");
                     this.$router.replace({ name: "Login" })
                 }).catch(error=>{
-                    console.log('error in logout:', error)
+                    this.$store.commit("UNSET_AUTH")
+                    localStorage.removeItem("meta");
+                    this.$router.replace({ name: "Login" })
                 })
             },
             toggleSideNav() {
@@ -153,17 +254,27 @@
                 } else {
                     this.mini = !this.mini
                 }
+            },
+            fullscreenMode() {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen()
+                } else {
+                    document.documentElement.requestFullscreen();
+                }
             }
         },
         mounted() {
             if (!!this.isMobile) {
                 this.show_nav = false
             }
-            console.log('store:::', this.$store.state)
-            /*setTimeout(() => {
-                console.log('ds')
-                this.$router.push({ name: 'Login'});
-            }, 10000);*/
+
+            window.addEventListener('resize', (evt) => {
+                if (window.innerHeight == screen.height) {
+                    this.fullscreen_mode = true
+                } else {
+                    this.fullscreen_mode = false
+                }
+            });
         }
     }
 </script>

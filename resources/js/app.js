@@ -47,5 +47,6 @@ const app = new Vue({
             },
         },
     }),
-    store: new Vuex.Store(store)
+    // store: new Vuex.Store(store)
+    store
 })

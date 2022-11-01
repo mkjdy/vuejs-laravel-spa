@@ -1,5 +1,5 @@
-//import Vue from 'vue'
-//import Vuex from 'vuex'
+import Vue from 'vue'
+import Vuex from 'vuex'
 
 import createPersistedState from "vuex-persistedstate";
 //import SecureLS from "secure-ls";
@@ -18,12 +18,12 @@ import createPersistedState from "vuex-persistedstate";
 import user from "./modules/user";
 
 
-//Vue.use(Vuex)
+Vue.use(Vuex)
 
 const store = {
     modules: {
         strict: process.env.NODE_ENV !== "production",
-        user
+        user,
     },
     plugins: [
         createPersistedState({
@@ -45,4 +45,4 @@ const store = {
     ]
 }
 
-export default store
+export default new Vuex.Store(store)
