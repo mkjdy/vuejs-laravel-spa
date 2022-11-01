@@ -43,4 +43,32 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function scopeWhereColumnContains($query, $searchTerm)
+    {
+        $attributes = [
+            'name',
+            // 'username',
+        ];
+
+        $query->where(function ($query) use ($attributes, $searchTerm) {
+            foreach ($attributes as $attribute) {
+                $query->when(
+                    str_contains($attribute, '.'),
+                    function ($q) use ($attribute, $searchTerm) {
+                        [$relationName, $relationAttribute] = explode('.', $attribute);
+
+                        return $q->orWhereHas($relationName, function ($q) use ($relationAttribute, $searchTerm) {
+                            $q->where($relationAttribute, 'LIKE', "%{$searchTerm}%");
+                        });
+                    },
+                    function ($q) use ($attribute, $searchTerm) {
+                        return $q->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
+                    }
+                );
+            }
+        });
+
+        return $query;
+    }
 }

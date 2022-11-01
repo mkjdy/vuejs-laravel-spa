@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from './store'
 Vue.use(VueRouter)
 
 const routes = new VueRouter({
@@ -61,7 +62,17 @@ const routes = new VueRouter({
                             path: 'dashboard2',
                             component: () => import(/* webpackChunkName: "sample_page" */ './components/general/SamplePage'),
                             name: 'Dashboard2'
-                        }
+                        },
+                        {
+                            path: 'roles',
+                            component: () => import(/* webpackChunkName: "roles" */ './pages/Roles'),
+                            name: 'Roles'
+                        },
+                        {
+                            path: 'user_management',
+                            component: () => import(/* webpackChunkName: "user_management" */ './pages/UserManagement'),
+                            name: 'User Management'
+                        },
                     ]
                 }
             ]
@@ -79,7 +90,12 @@ function sessionAlive() {
 
 routes.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.isAuth)) {
-        return !sessionAlive() ? next({ name: 'Login' }) : next()
+        if (!sessionAlive()) {
+            return next({ name: 'Login' })
+        } else {
+            store.commit('SET_APP_LOADER', true)
+            return next()
+        }
     } else if (to.matched.some(record => record.meta.isGuest)) {
         return sessionAlive() ? next({ name: 'Dashboard' }) : next()
     } else {
