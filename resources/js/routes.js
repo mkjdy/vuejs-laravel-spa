@@ -14,7 +14,7 @@ const routes = new VueRouter({
         },
         {
             path: '/',
-            component: () => import(/* webpackChunkName: "welcome_container" */ './components/AppContainer'),
+            component: () => import(/* webpackChunkName: "app_container" */ './components/AppContainer'),
             //redirect: { name: 'Login' },
             children: [
                 {
@@ -31,13 +31,24 @@ const routes = new VueRouter({
                     children: [
                         {
                             path: '',
-                            component: () => import('./components/Login'),
+                            component: () => import(/* webpackChunkName: "login" */ './pages/Login'),
                             name: 'Login',
                         },
                         {
                             path: 'guest',
-                            component: () => import('./components/Guest'),
+                            component: () => import(/* webpackChunkName: "guest" */ './components/Guest'),
                             name: 'Guest',
+                        },
+                        {
+                            path: 'changelog',
+                            component: () => import(/* webpackChunkName: "changelog" */ './pages/ChangeLog'),
+                            name: 'Changelog',
+
+                        },
+                        {
+                            path: 'about',
+                            component: () => import(/* webpackChunkName: "about" */ './pages/About'),
+                            name: 'About',
                         },
                     ]
                 },
@@ -55,23 +66,32 @@ const routes = new VueRouter({
                     children: [
                         {
                             path: 'dashboard',
-                            component: () => import(/* webpackChunkName: "dashboard" */ './components/general/Dashboard'),
-                            name: 'Dashboard'
+                            component: () => import(/* webpackChunkName: "dashboard" */ './pages/Dashboard'),
+                            name: 'Dashboard',
+                            meta: { access: 'view-dashboard' },
                         },
                         {
-                            path: 'dashboard2',
-                            component: () => import(/* webpackChunkName: "sample_page" */ './components/general/SamplePage'),
-                            name: 'Dashboard2'
+                            path: 'reports',
+                            component: () => import(/* webpackChunkName: "reports" */ './pages/Reports'),
+                            name: 'Reports',
+                            meta: { access: 'generate-reports' },
                         },
                         {
                             path: 'roles',
                             component: () => import(/* webpackChunkName: "roles" */ './pages/Roles'),
-                            name: 'Roles'
+                            name: 'Roles',
+                            meta: { access: 'view-role' },
                         },
                         {
                             path: 'user_management',
                             component: () => import(/* webpackChunkName: "user_management" */ './pages/UserManagement'),
-                            name: 'User Management'
+                            name: 'User Management',
+                            meta: { access: 'view-user' },
+                        },
+                        {
+                            path: 'user_profile',
+                            component: () => import(/* webpackChunkName: "user_profile" */ './pages/UserProfile'),
+                            name: 'User Profile',
                         },
                     ]
                 }
@@ -79,6 +99,20 @@ const routes = new VueRouter({
         }
     ]
 })
+
+function redirectToAvailableRoute() {
+    return new Promise((resolve, reject)=>{
+        try {
+            routes.options.routes.find(rp=>rp.path=="/").children.find(cm=>cm.meta.isAuth).children.forEach(rn=>{
+                if (!rn?.meta || Vue.prototype.$can(rn?.meta?.access)) {
+                    resolve(rn.name);
+                }
+            })
+        } catch (error) {
+            resolve('NotFound')
+        }
+    })
+}
 
 function sessionAlive() {
     if(localStorage?.meta) {
@@ -89,12 +123,26 @@ function sessionAlive() {
 };
 
 routes.beforeEach((to, from, next) => {
+    let new_title = document.title.split('-')
+
+    if (new_title.length > 1) {
+        new_title.splice(0, 1, to.name + ' ')
+    } else {
+        new_title = [to.name, document.title]
+    }
+
+    document.title = new_title.join(' - ')
+
     if (to.matched.some(record => record.meta.isAuth)) {
         if (!sessionAlive()) {
             return next({ name: 'Login' })
         } else {
-            store.commit('SET_APP_LOADER', true)
-            return next()
+            if (to?.meta?.access && !Vue.prototype.$can(to?.meta?.access)) {
+                redirectToAvailableRoute().then(route_name=>next({ name:route_name }))
+            } else {
+                store.commit('SET_APP_LOADER', true)
+                return next()
+            }
         }
     } else if (to.matched.some(record => record.meta.isGuest)) {
         return sessionAlive() ? next({ name: 'Dashboard' }) : next()

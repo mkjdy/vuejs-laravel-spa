@@ -15,15 +15,24 @@ use Illuminate\Support\Facades\Route;
 */
 //public route
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
-    Route::post('/register', 'AuthController@register');
+    // Route::post('/register', 'AuthController@register');
     Route::post('/login', 'AuthController@login');
 });
 
 //protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['namespace' => 'App\Http\Controllers'], function () {
-        Route::get('/user/get', 'UserController@index');
+        //User
+        Route::resource('users', UserController::class)->except(['create', 'show', 'edit']);
+
+        //Auth
         Route::post('/logout', 'AuthController@logout');
+
+        //Role
+        Route::customRoleResource('roles', RoleController::class);
+
+        //Permission
+        Route::resource('permissions', PermissionController::class)->except(['create', 'store', 'show', 'edit', 'update', 'destroy']);
     });
 });
 /*Route::group(['namespace' => 'App\Http\Controllers'], function () {

@@ -15,18 +15,20 @@ import colors from 'vuetify/lib/util/colors'
 
 //Vuex
 import store from './store/index'
-import Vuex from 'vuex'
-Vue.use(Vuex)
+// import Vuex from 'vuex'
+// Vue.use(Vuex)
 
 import  routes  from './routes'
 //console.log("ewtwe", routes, 'ff',__dirname)
 
 import './validate'
 
+import './prototypes'
+
 //['Vuetify', 'VueRouter'].forEach(plugins => Vue.use(plugins))
 
-Vue.component('app-container', require('./components/AppContainer').default);
-Vue.component('login-page', require('./components/Login').default);
+// Vue.component('app-container', require('./components/AppContainer').default);
+// Vue.component('login-page', require('./components/Login').default);
 
 const app = new Vue({
     el: '#app',
@@ -36,7 +38,7 @@ const app = new Vue({
             dark: false,
             themes: {
               light: {
-                primary: colors.blue.darken1,
+                primary: colors.blue.darken1/*'#0675BB'*/,
                 secondary: colors.grey.darken1,
                 accent: colors.shades.black,
                 error: colors.red.accent3,
@@ -47,6 +49,6 @@ const app = new Vue({
             },
         },
     }),
-    // store: new Vuex.Store(store)
     store
+    // store: new Vuex.Store(store)
 })

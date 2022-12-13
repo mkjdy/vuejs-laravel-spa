@@ -5,10 +5,10 @@
                 <v-list-item two-line class="pl-2">
                     <v-list-item-avatar class="my-0">
                         <!--<img src="https://randomuser.me/api/portraits/women/81.jpg">-->
-                        <img :src="profilePic">
+                        <img class="display-image" :src="profilePic">
                     </v-list-item-avatar>
                     <v-list-item-content>
-                        <v-list-item-title> {{ authUser.name }} </v-list-item-title>
+                        <v-list-item-title> {{ authUser.first_name }} </v-list-item-title>
                         <v-list-item-subtitle>Logged In</v-list-item-subtitle>
                     </v-list-item-content>
                     <v-btn icon  @click.stop="toggleSideNav()" title="Minimize Sidebar">
@@ -30,7 +30,7 @@
                     </v-list-item> -->
 
 
-                    <v-list-item :to="{ name: 'Dashboard' }" title="Dashboard">
+                    <v-list-item v-if="$can('view-dashboard')" :to="{ name: 'Dashboard' }" title="Dashboard">
                         <v-list-item-icon>
                             <v-icon>mdi-chart-bar</v-icon>
                         </v-list-item-icon>
@@ -39,26 +39,48 @@
                         </v-list-item-content>
                     </v-list-item>
 
+                    <v-list-item v-if="$can('generate-reports')" :to="{ name: 'Reports' }" title="Reports">
+                        <v-list-item-icon>
+                            <v-icon>mdi-folder-open-outline</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title>Reports</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <!-- <v-list-item :to="{ name: 'Settings' }">
+                        <v-list-item-icon>
+                            <v-icon>mdi-cog-outline</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title>Settings</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item> -->
+
                     <v-list-group
+                        v-if="$can([
+                            'view-role',
+                            'view-user',
+                        ])"
                         :value="['Roles', 'User Management'].includes($route.name)"
                         no-action
-                        :title="`User Control${['Roles', 'User Management'].includes($route.name) ? ` (${$route.name})` : ''}`"
+                        :title="`Access Control${['Roles', 'User Management'].includes($route.name) ? ` (${$route.name})` : ''}`"
                     >
                         <template v-slot:activator>
                             <v-list-item-icon>
                                 <v-icon>mdi-account-cog-outline</v-icon>
                             </v-list-item-icon>
                             <v-list-item-content>
-                                <v-list-item-title>User Control</v-list-item-title>
+                                <v-list-item-title>Access Control</v-list-item-title>
                             </v-list-item-content>
                         </template>
-                        <v-list-item :to="{ name: 'Roles' }" title="Roles">
+                        <v-list-item v-if="$can('view-role')" :to="{ name: 'Roles' }" title="Roles">
                             <v-list-item-title>Roles</v-list-item-title>
                             <v-list-item-icon>
                                 <v-icon>mdi-account-key</v-icon>
                             </v-list-item-icon>
                         </v-list-item>
-                        <v-list-item :to="{ name: 'User Management' }" title="User Management">
+                        <v-list-item v-if="$can('view-user')" :to="{ name: 'User Management' }" title="User Management">
                             <v-list-item-title>User Management</v-list-item-title>
                             <v-list-item-icon>
                                 <v-icon>mdi-account-multiple-outline</v-icon>
@@ -66,12 +88,12 @@
                         </v-list-item>
                     </v-list-group>
 
-                    <v-list-item title="My Account">
+                    <v-list-item :to="{ name: 'User Profile' }" title="User Profile">
                         <v-list-item-icon>
                             <v-icon>mdi-account-circle-outline</v-icon>
                         </v-list-item-icon>
                         <v-list-item-content>
-                            <v-list-item-title>My Profile</v-list-item-title>
+                            <v-list-item-title>User Profile</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
 
@@ -215,7 +237,7 @@
         computed: {
             ...mapGetters(['auth', 'app_loader', 'snackbar']),
             profilePic() {
-                return location.origin + '/images/provincial_logo.png'
+                return location.origin.concat('/') + (this.authUser?.avatar || 'images/no_image.jpg')
             },
             isMobile() {
                 return this.$vuetify.breakpoint.smAndDown
@@ -278,3 +300,9 @@
         }
     }
 </script>
+
+<style scoped>
+    .display-image {
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+</style>
