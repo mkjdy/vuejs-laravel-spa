@@ -6,10 +6,12 @@ import {
     min,
     confirmed,
     alpha_spaces,
+    alpha_num,
     numeric,
     size,
     regex,
-    digits
+    digits,
+    double
 } from "vee-validate/dist/rules";
 
 extend("size", {
@@ -60,7 +62,18 @@ extend("numeric", {
     message: "This field must only contain numerical values"
 });
 
+extend('length', {
+    validate(value, { char_length }) {
+        return value.length >= char_length;
+    },
+    params: ['char_length'],
+    message: 'This field must have at least {char_length} characters'
+})
 
+extend('alpha_num', {
+    ...alpha_num,
+    message: "This field may only contain alpha-numeric characters"
+});
 
 //setInteractionMode('eager')
 
@@ -88,3 +101,19 @@ message: '{_field_} {_value_} does not match {regex}',
 ...email,
 message: 'Email must be valid',
 })*/
+
+extend('double', {
+    ...double,
+    // message: "This field only contain decimal"
+    message: (fieldName, placeholders) => {
+        return `This field must be a valid decimal` + (placeholders.decimals > 0 ? ` with ${placeholders.decimals} decimal places` : '')
+    }
+});
+
+extend('minmax', {
+    validate(value, { min, max }) {
+        return Number(value) >= Number(min) && Number(value) <= Number(max)
+    },
+    params: ['min', 'max'],
+    message: '{_field_} must be at least {min} and {max} at most'
+})
