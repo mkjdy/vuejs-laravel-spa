@@ -8,8 +8,8 @@
                             <v-img
                                 :max-width="max_width"
                                 :max-height="max_height"
-                                src="images/provincial_logo.png"
-                                lazy-src="images/provincial_logo.png"
+                                src="images/app_logo.png"
+                                lazy-src="images/app_logo.png"
                             >
                                 <template v-slot:placeholder>
                                     <v-row
