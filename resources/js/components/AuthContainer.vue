@@ -177,7 +177,8 @@
 
             <v-spacer></v-spacer>
 
-            <v-icon @click.stop="">mdi-bell</v-icon>
+            <!-- <v-icon @click.stop="">mdi-bell</v-icon> -->
+            <Notification/>
 
         </v-app-bar>
 
@@ -203,8 +204,13 @@
 
     import { mapGetters } from 'vuex'
     import axios from '../config/axios'
+    import Notification from './general/Notification'
 
     export default {
+        components: {
+            // Notification: () => import(/* webpackChunkName: "notification" */ "./general/Notification"),
+            Notification
+        },
         data () {
             return {
                 dialog: false,
