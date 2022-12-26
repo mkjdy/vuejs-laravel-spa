@@ -3,7 +3,7 @@
         <v-main>
             <v-container fluid fill-height>
                 <v-layout class="align-center justify-center">
-                    <v-card width="600px" flat>
+                    <v-card width="600px" flat color="transparent">
                         <v-layout class="align-center justify-center">
                             <v-img
                                 :max-width="max_width"

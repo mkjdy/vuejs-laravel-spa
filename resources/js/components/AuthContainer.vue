@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-navigation-drawer color="#FCFCFC" app :temporary="!!isMobile" :permanent="!isMobile || (!!isMobile && !!show_nav)" left v-model="drawer" :mini-variant.sync="mini" v-if="show_nav">
+        <v-navigation-drawer :color="$vuetify.theme.dark ? '' : '#FCFCFC'" :dark="$vuetify.theme.dark" app :temporary="!!isMobile" :permanent="!isMobile || (!!isMobile && !!show_nav)" left v-model="drawer" :mini-variant.sync="mini" v-if="show_nav">
             <template v-slot:prepend>
                 <v-list-item two-line class="pl-2">
                     <v-list-item-avatar class="my-0">
@@ -97,6 +97,15 @@
                         </v-list-item-content>
                     </v-list-item>
 
+                    <v-list-item v-if="$can('view-setting')" :to="{ name: 'Settings' }" title="Settings">
+                        <v-list-item-icon>
+                            <v-icon>mdi-cog-outline</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title>Settings</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
                 </v-list-item-group>
             </v-list>
             <template v-slot:append>
@@ -158,7 +167,7 @@
             </template>
         </v-navigation-drawer>
 
-        <v-app-bar color="primary" elevation="1" app dark :style="(isMobile ? '' : 'height:64px;')">
+        <v-app-bar :color="$vuetify.theme.dark ? '' : 'primary'" elevation="1" app dark :style="(isMobile ? '' : 'height:64px;')">
             <v-app-bar-nav-icon @click.stop="navVisibility" title="Toggle Sidebar"/>
             <v-app-bar-nav-icon @click="fullscreenMode()" title="Toggle Full screen mode (F11)">
                 <v-icon v-if="fullscreen_mode">mdi-fullscreen-exit</v-icon>

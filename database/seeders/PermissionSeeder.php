@@ -39,6 +39,9 @@ class PermissionSeeder extends Seeder
             'add-role',
             'edit-role',
             'delete-role',
+
+            //setting
+            'view-setting',
         ];
 
         foreach($permissions as $permit) Permission::create(['name' => $permit, 'guard_name' => 'sanctum']);
@@ -53,7 +56,7 @@ class PermissionSeeder extends Seeder
                 }
             } else if($role_key == 1) {
                 foreach($permissions as $key=>$value) {
-                    if (!in_array(explode('-', $value)[1], ['role', 'user'])) {
+                    if (!in_array(explode('-', $value)[1], ['reports', 'role', 'user'])) {
                         $permission = Permission::find($key+1);
                         $role->givePermissionTo($permission->name);
                         $permission->assignRole($role->name);

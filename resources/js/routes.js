@@ -93,6 +93,12 @@ const routes = new VueRouter({
                             component: () => import(/* webpackChunkName: "user_profile" */ './pages/UserProfile'),
                             name: 'User Profile',
                         },
+                        {
+                            path: 'settings',
+                            component: () => import(/* webpackChunkName: "settings" */ './pages/Settings'),
+                            name: 'Settings',
+                            meta: { access: 'view-setting' },
+                        },
                     ]
                 }
             ]
