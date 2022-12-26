@@ -32,10 +32,6 @@
    ```php
    php artisan storage:link
    ```
-9. (`optional`) If has problem with cache run:
-   ```php
-   php artisan optimize:clear
-   ```
    
 ### Serve App for `development`
 
@@ -47,4 +43,9 @@
    ```sh
    npm run watch
    ```
+3. (`optional`) If has problem with cache run:
+   ```php
+   php artisan optimize:clear
+   ```
+   
 <p align="right">(<a href="#top">back to top</a>)</p>
