@@ -1,6 +1,6 @@
 <template>
-<v-app>
-    <v-app-bar
+    <v-app>
+        <v-app-bar
             app
             color="primary"
             dark
@@ -9,6 +9,7 @@
             <v-toolbar-title>Application Title</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-menu offset-y>
+
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
                         plain
@@ -20,6 +21,7 @@
                     <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
                 </template>
+
                 <v-list>
                     <v-list-item
                         @click.prevent="aboutPage"
@@ -57,6 +59,7 @@
                 <v-icon left>mdi-information-outline</v-icon>
                 About
             </v-btn>
+
             <v-btn
                 plain
                 dark
@@ -66,6 +69,7 @@
                 <v-icon left>mdi-format-list-text</v-icon>
                 Changelogs
             </v-btn>
+
             <v-btn
                 plain
                 dark
@@ -75,12 +79,13 @@
                 <v-icon left>mdi-login-variant</v-icon>
                 Login
             </v-btn>
+
         </v-app-bar>
+
         <v-main>
-
-    <router-view />
-
+            <router-view />
         </v-main>
+
     </v-app>
 </template>
 

@@ -24,14 +24,14 @@ class DatabaseSeeder extends Seeder
             'middle_name' => NULL,
             'last_name' => 'Admin',
             'username' => 'admin',
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' //value = password
         ]);
         \App\Models\User::factory()->create([
             'first_name' => 'User',
             'middle_name' => NULL,
             'last_name' => 'User',
             'username' => 'user',
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' //value = password
         ]);
         \App\Models\User::factory(10)->create();
 
