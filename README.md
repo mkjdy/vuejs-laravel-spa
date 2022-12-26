@@ -43,7 +43,7 @@
    ```sh
    npm run watch
    ```
-3. (`optional`) If has problem with cache run:
+3. (`optional`) If has problem with php cache always run:
    ```php
    php artisan optimize:clear
    ```
