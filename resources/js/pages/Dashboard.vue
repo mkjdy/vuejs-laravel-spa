@@ -5,11 +5,7 @@
         <v-btn v-if="$vuetify.theme.dark" @click="$vuetify.theme.dark = !$vuetify.theme.dark">Light</v-btn>
         <v-btn v-else @click="$vuetify.theme.dark = !$vuetify.theme.dark">dark</v-btn>
 
-        <!-- <router-link to="/">Home</router-link>
-        <router-link to="/">Login</router-link>
-        <router-link to="/user/gg">Page Not Exist</router-link>
-        <router-link to="/dashboard">Dashboard 1</router-link>
-        <router-link to="/dashboard2">Dashboard 2</router-link> -->
+        <!-- <router-link to="/user/gg">Page Not Exist</router-link> -->
     </div>
 </template>
 

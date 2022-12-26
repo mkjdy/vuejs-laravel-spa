@@ -15,29 +15,16 @@ const routes = new VueRouter({
         {
             path: '/',
             component: () => import(/* webpackChunkName: "app_container" */ './components/AppContainer'),
-            //redirect: { name: 'Login' },
             children: [
                 {
                     path: '',
                     component: () => import(/* webpackChunkName: "quest_container" */ './components/GuestContainer'),
-                    /*beforeEnter: (to, from, next) => {
-                        axios.get('/api/authenticated').then(() => {
-                            next()
-                        }).catch(() => {
-                            return next({ name: 'Login'})
-                        });
-                    },*/
                     meta: { isGuest: true },
                     children: [
                         {
                             path: '',
                             component: () => import(/* webpackChunkName: "login" */ './pages/Login'),
                             name: 'Login',
-                        },
-                        {
-                            path: 'guest',
-                            component: () => import(/* webpackChunkName: "guest" */ './components/Guest'),
-                            name: 'Guest',
                         },
                         {
                             path: 'changelog',
@@ -55,13 +42,6 @@ const routes = new VueRouter({
                 {
                     path: '',
                     component: () => import(/* webpackChunkName: "auth_container" */ './components/AuthContainer'),
-                    /*beforeEnter: (to, from, next) => {
-                        axios.get('/api/authenticated').then(() => {
-                            next()
-                        }).catch(() => {
-                            return next({ name: 'Login'})
-                        });
-                    },*/
                     meta: { isAuth: true },
                     children: [
                         {

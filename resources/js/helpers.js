@@ -23,16 +23,10 @@ export function buildDateTime(datetime, format=null) {
 export function permissionsCategoryColor(category) {
     const permissions_category_color = {
         dashboard: '#32B87C',
-        pr: '#3970AA',
-        obr: '#A9AA55',
         user: '#5655AA',
         role: '#F56C6C',
         reports: '#C08163',
-        office: '#5F7B90',
-        budget: '#B47BB4',
-        accountcode: '#8F847B',
-        aro: '#A36163',
-        budget_allotment: '#A36163',
+        setting: '#A36163',
     }
 
     return permissions_category_color[category]

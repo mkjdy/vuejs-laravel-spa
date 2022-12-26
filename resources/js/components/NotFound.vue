@@ -1,9 +1,5 @@
 <template>
     <v-app>
-        <!-- <v-app-bar color="primary" elevation="1" app dark>
-            <v-icon title="Go Back" @click="goBack" class="mr-4">mdi-arrow-left</v-icon>
-            <v-toolbar-title>Provincial Budget Management</v-toolbar-title>
-        </v-app-bar> -->
         <v-main>
             <img :src="baseUrl" class="logo-404" />
 
@@ -20,16 +16,6 @@
                     <v-icon left dark> mdi-keyboard-backspace </v-icon> Back
                 </v-btn>
             </p>
-            <!-- <v-container fluid fill-height>
-                <v-layout class="align-center justify-center">
-
-                    <v-btn color="primary" link outlined class="mr-2" @click="goBack">
-                        <v-icon left dark> mdi-keyboard-backspace </v-icon> Back
-                    </v-btn>
-                    <h3><span style="color:red">404 ERROR</span> - Page Not Found</h3>
-
-                </v-layout>
-            </v-container> -->
         </v-main>
 
         <v-dialog width="450px" v-model="confirm_dialog">

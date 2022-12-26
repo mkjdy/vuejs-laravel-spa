@@ -159,7 +159,6 @@
                 axios.get("/sanctum/csrf-cookie").then(res => {
                     axios.post('/api/login', {username: this.username, password: this.password}).then(async response => {
                         this.$store.commit('SET_AUTH', response.data)
-                        // await this.getOffices()
                         this.$router.push({ name: "Dashboard" })
                     }).catch(error=>{
                         if ([401, 409].includes(error.response.status)) {
@@ -172,11 +171,6 @@
                     })
                 }).catch(()=>{ this.login_btn_loading = false });
             },
-            // async getOffices() {
-            //     await axios.get(`/api/offices`, { headers: { Authorization: 'Bearer ' + this.$store.state.user?.auth?.token, 'Content-Type': 'application/json' } }).then(response=>{
-            //         this.$store.commit('SET_OFFICES', response.data)
-            //     })
-            // }
         },
         mounted() {
             this.$refs.username.focus()

@@ -4,7 +4,6 @@
             <template v-slot:prepend>
                 <v-list-item two-line class="pl-2">
                     <v-list-item-avatar class="my-0">
-                        <!--<img src="https://randomuser.me/api/portraits/women/81.jpg">-->
                         <img class="display-image" :src="profilePic">
                     </v-list-item-avatar>
                     <v-list-item-content>
@@ -19,16 +18,6 @@
             <v-divider/>
             <v-list nav dense>
                 <v-list-item-group v-model="selectedItem" color="primary">
-                    <!-- <v-list-item v-for="(item, i) in items" :key="i" :to="{ name: item.name }">
-                        <v-list-item-icon>
-                            <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-item-icon>
-
-                        <v-list-item-content>
-                            <v-list-item-title>{{ item.title }}</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item> -->
-
 
                     <v-list-item v-if="$can('view-dashboard')" :to="{ name: 'Dashboard' }" title="Dashboard">
                         <v-list-item-icon>
@@ -47,15 +36,6 @@
                             <v-list-item-title>Reports</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
-
-                    <!-- <v-list-item :to="{ name: 'Settings' }">
-                        <v-list-item-icon>
-                            <v-icon>mdi-cog-outline</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Settings</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item> -->
 
                     <v-list-group
                         v-if="$can([
@@ -111,27 +91,16 @@
             <template v-slot:append>
                 <v-dialog v-model="logout_confirm_dialog" max-width="450px">
                     <template v-slot:activator="{ on, attrs }">
-                        <!-- <div class="pa-2">
-                            <v-btn block class="error" v-if="!mini" v-bind="attrs" v-on="on">
-                                <v-icon left>mdi-logout</v-icon>
-                                Logout
-                            </v-btn>
-                            <v-btn block class="error" v-else icon dark elevation="1" v-bind="attrs" v-on="on">
-                                <v-icon small>mdi-logout</v-icon>
-                            </v-btn>
-                        </div> -->
                         <v-list nav dense title="Logout">
-                            <!-- <v-list-item-group v-model="selectedItem" color="error"> -->
-                                <v-list-item v-bind="attrs" v-on="on">
-                                    <v-list-item-icon>
-                                        <v-icon color="error">mdi-logout</v-icon>
-                                    </v-list-item-icon>
+                            <v-list-item v-bind="attrs" v-on="on">
+                                <v-list-item-icon>
+                                    <v-icon color="error">mdi-logout</v-icon>
+                                </v-list-item-icon>
 
-                                    <v-list-item-content>
-                                        <v-list-item-title>Logout</v-list-item-title>
-                                    </v-list-item-content>
-                                </v-list-item>
-                            <!-- </v-list-item-group> -->
+                                <v-list-item-content>
+                                    <v-list-item-title>Logout</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
                         </v-list>
                     </template>
                     <template v-slot:default="dialog">
@@ -155,15 +124,6 @@
                         </v-card>
                     </template>
                 </v-dialog>
-                <!-- <div class="pa-2">
-                    <v-btn block class="error" v-if="!mini" @click="logout">
-                        <v-icon left>mdi-logout</v-icon>
-                        Logout
-                    </v-btn>
-                    <v-btn block class="error" v-else icon dark elevation="1" @click="logout">
-                        <v-icon small>mdi-logout</v-icon>
-                    </v-btn>
-                </div> -->
             </template>
         </v-navigation-drawer>
 
@@ -217,7 +177,6 @@
 
     export default {
         components: {
-            // Notification: () => import(/* webpackChunkName: "notification" */ "./general/Notification"),
             Notification
         },
         data () {
@@ -226,13 +185,6 @@
                 drawer: null,
                 mini: false,
                 show_nav: true,
-                // items: [
-                //     { title: 'Dashboard', name: 'Dashboard', icon: 'mdi-chart-bar' },
-                //     { title: 'Purchase Requests', name: 'Purchase Requests', icon: 'mdi-file-document-multiple-outline' },
-                //     { title: 'Obligation Requests', name: 'Obligation Requests', icon: 'mdi-checkbox-multiple-marked-outline' },
-                //     { title: 'Reports', name: 'Reports', icon: 'mdi-folder-open-outline' },
-                //     { title: 'Settings', name: 'Settings', icon: 'mdi-cog-outline', sub_menu: [{ title: 'Settings', name: 'Settings', icon: 'mdi-cog-outline' }]},
-                // ],
                 selectedItem: 0,
                 logout_confirm_dialog: false,
                 fullscreen_mode: false,
@@ -256,7 +208,6 @@
             },
             isMobile() {
                 return this.$vuetify.breakpoint.smAndDown
-                // return $vuetify.breakpoint.mobile
             },
             authUser() {
                 return this.auth || {}

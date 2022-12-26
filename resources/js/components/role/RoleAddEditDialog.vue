@@ -9,18 +9,6 @@
                 scrollable
             >
                 <v-card>
-                    <!-- <v-toolbar
-                        dark
-                        color="primary"
-                        flat
-                    >
-                        <v-toolbar-title>{{ manage_dialog.title }} Role</v-toolbar-title>
-                        <v-spacer />
-                        <v-btn icon dark @click="dialog=false">
-                            <v-icon>mdi-close</v-icon>
-                        </v-btn>
-                    </v-toolbar> -->
-
                     <v-card-title>
                         <span class="text-h5"> {{ manage_dialog.title }} User</span>
                     </v-card-title>
@@ -119,7 +107,6 @@
                         </v-container>
                         <small class="ml-4">*indicates required field</small>
                     </v-card-text>
-                    <!-- <v-divider class="my-0" /> -->
 
                     <v-card-actions>
                         <v-btn
@@ -175,7 +162,6 @@ export default {
             dialog: true,
             hasSelected: false,
             panel: [],
-            // items: 10,
             selectedRolesAndPermissions: [],
             role: '',
             description: null,
