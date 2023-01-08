@@ -25,7 +25,7 @@
                     v-model="options.page"
                     :title="`Jump to page 1-${Math.max(...options.list)}`"
                     class="mr-4 px-2 pagination-select"
-                    :style="`border:2px solid #F7F7F7;border-radius:5px;text-align:center;`"
+                    :style="`border:2px solid #F7F7F7;border-radius:5px;text-align:center;${$vuetify.theme.dark ? 'color:white' : ''}`"
                 >
                     <option v-for="(page, i) in options.list" :value="page" :label="page" :key="i" style="color:black" />
                 </select>
