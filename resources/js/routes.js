@@ -68,11 +68,11 @@ const routes = new VueRouter({
                             name: 'User Management',
                             meta: { access: 'view-user' },
                         },
-                        {
-                            path: 'user_profile',
-                            component: () => import(/* webpackChunkName: "user_profile" */ './pages/UserProfile'),
-                            name: 'User Profile',
-                        },
+                        // {
+                        //     path: 'user_profile',
+                        //     component: () => import(/* webpackChunkName: "user_profile" */ './pages/UserProfile'),
+                        //     name: 'User Profile',
+                        // },
                         {
                             path: 'settings',
                             component: () => import(/* webpackChunkName: "settings" */ './pages/Settings'),

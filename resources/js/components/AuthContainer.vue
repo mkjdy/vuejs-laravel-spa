@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-navigation-drawer :color="$vuetify.theme.dark ? '' : '#FCFCFC'" :dark="$vuetify.theme.dark" app :temporary="!!isMobile" :permanent="!isMobile || (!!isMobile && !!show_nav)" left v-model="drawer" :mini-variant.sync="mini" v-if="show_nav">
+        <v-navigation-drawer style="border-right:1px solid rgba(0,0,0,0.05)" :color="$vuetify.theme.dark ? '' : '#FCFCFC'" :dark="$vuetify.theme.dark" app :temporary="!!isMobile" :permanent="!isMobile || (!!isMobile && !!show_nav)" left v-model="drawer" :mini-variant.sync="mini" v-if="show_nav">
             <template v-slot:prepend>
                 <v-list-item two-line class="pl-2">
                     <v-list-item-avatar class="my-0">
@@ -68,14 +68,14 @@
                         </v-list-item>
                     </v-list-group>
 
-                    <v-list-item :to="{ name: 'User Profile' }" title="User Profile">
+                    <!-- <v-list-item :to="{ name: 'User Profile' }" title="User Profile">
                         <v-list-item-icon>
                             <v-icon>mdi-account-circle-outline</v-icon>
                         </v-list-item-icon>
                         <v-list-item-content>
                             <v-list-item-title>User Profile</v-list-item-title>
                         </v-list-item-content>
-                    </v-list-item>
+                    </v-list-item> -->
 
                     <v-list-item v-if="$can('view-setting')" :to="{ name: 'Settings' }" title="Settings">
                         <v-list-item-icon>
