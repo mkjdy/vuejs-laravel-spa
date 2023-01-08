@@ -80,6 +80,8 @@
                 Login
             </v-btn>
 
+            <Theme />
+
         </v-app-bar>
 
         <v-main>
@@ -90,7 +92,12 @@
 </template>
 
 <script>
+import Theme from "./general/Theme";
+
 export default {
+    components: {
+        Theme,
+    },
     methods: {
         loginPage() {
             if(this.$route.name != 'Login') {

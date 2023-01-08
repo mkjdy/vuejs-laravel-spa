@@ -68,9 +68,13 @@ export default {
             this.$router.go(-1)
         },
         goClearCache() {
-            localStorage.clear()
+            // localStorage.clear()
+            localStorage.removeItem("meta");
             this.$router.replace({ name: "Login" })
-        }
+        },
+    },
+    created() {
+        this.$vuetify.theme.dark = localStorage.getItem("app_theme") != '0' ? true : false
     },
     mounted() {
         this.$store.commit("SET_APP_LOADER", false)
